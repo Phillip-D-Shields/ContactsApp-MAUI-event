@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Contact = ContactsApp.Models.Contact;
 using ContactRepository = ContactsApp.Models.ContactRepository;
 
@@ -9,12 +10,17 @@ public partial class ContactsPage : ContentPage
 	public ContactsPage()
 	{
 		InitializeComponent();
-
-		List<Contact> contacts = ContactRepository.GetContacts();
-
-		listContacts.ItemsSource = contacts;
 		
 	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+
+        var contacts = new ObservableCollection<Contact>(ContactRepository.GetContacts());
+
+        listContacts.ItemsSource = contacts;
+    }
 
 
     private async void listContacts_ItemSelected(object sender, SelectedItemChangedEventArgs e)

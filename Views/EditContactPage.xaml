@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="ContactsApp.Views.EditContactPage"
              Title="EditContactPage">
     
@@ -37,13 +38,27 @@
         <Frame Padding="10,5,10,5">
             <HorizontalStackLayout>
                 <Label Text="Name" VerticalOptions="Center"/>
-                <Entry x:Name="entryName"  VerticalOptions="End" />
+                <Entry x:Name="entryName"  VerticalOptions="End" >
+                    <Entry.Behaviors>
+                        <toolkit:TextValidationBehavior 
+                            x:Name="nameValidator" 
+                            Flags="ValidateOnAttaching,ValidateOnValueChanged" 
+                            MinimumLength="1" />
+                    </Entry.Behaviors>
+                </Entry>
             </HorizontalStackLayout>
         </Frame>
         <Frame Padding="10,5,10,5">
             <HorizontalStackLayout>
                 <Label Text="Email" VerticalOptions="Center"/>
-                <Entry x:Name="entryEmail"  VerticalOptions="End" />
+                <Entry x:Name="entryEmail"  VerticalOptions="End" >
+                    <Entry.Behaviors>
+                        <toolkit:MultiValidationBehavior x:Name="emailValidator" Flags="ValidateOnAttaching,ValidateOnValueChanged" >
+                            <toolkit:TextValidationBehavior Flags="ValidateOnAttaching,ValidateOnValueChanged" MinimumLength="1" toolkit:MultiValidationBehavior.Error="email is required" />
+                            <toolkit:EmailValidationBehavior Flags="ValidateOnAttaching,ValidateOnValueChanged" toolkit:MultiValidationBehavior.Error="email format is invalid" />
+                        </toolkit:MultiValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
             </HorizontalStackLayout>
         </Frame>
         <Frame Padding="10,5,10,5">
@@ -58,7 +73,7 @@
                 <Entry x:Name="entryAddress" VerticalOptions="End" />
             </HorizontalStackLayout>
         </Frame>
-
+        <Button x:Name="btnUpdate" Text="update" Clicked="btnUpdate_Clicked" />
         <Button x:Name="btncancel" Text="cancel" Clicked="btnCancel_Clicked" />
     </VerticalStackLayout>
 </ContentPage>

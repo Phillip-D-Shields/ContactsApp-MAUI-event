@@ -19,6 +19,42 @@ namespace ContactsApp.Models
 
         public static List<Contact> GetContacts() => _contacts;
 
-        public static Contact GetContact(int contactId) => _contacts.FirstOrDefault(c => c.ContactId == contactId);
+        public static Contact GetContact(int contactId)
+        {
+            var contact = _contacts.FirstOrDefault(c => c.ContactId == contactId);
+
+            if (contact != null)
+            {
+                return new Contact
+                {
+                    ContactId = contactId,
+                    Name = contact.Name,
+                    Email = contact.Email,
+                    Phone = contact.Phone,
+                    Address = contact.Address
+                };
+            }
+            return null;
+        }
+
+        public static void UpdateContact(int contactId, Contact contact)
+        {
+            if (contactId != contact.ContactId)
+                return;
+
+            var contactToUpdate = _contacts.FirstOrDefault(c => c.ContactId == contactId);
+            
+            if (contactToUpdate != null)
+            {
+                // automapper for future use, below is very basic
+                contactToUpdate.Name = contact.Name;
+                contactToUpdate.Email = contact.Email;
+                contactToUpdate.Phone = contact.Phone;
+                contactToUpdate.Address = contact.Address;
+
+                //ContactRepository.UpdateContact(contact.ContactId, contact);
+                //Shell.Current.GoToAsync("..");
+            }
+        }   
     }
 }
