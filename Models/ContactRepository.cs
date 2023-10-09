@@ -55,6 +55,13 @@ namespace ContactsApp.Models
                 //ContactRepository.UpdateContact(contact.ContactId, contact);
                 //Shell.Current.GoToAsync("..");
             }
-        }   
+        }
+        
+        public static void AddContact(Contact contact)
+        {
+            var maxId = _contacts.Max(c => c.ContactId);
+            contact.ContactId = maxId + 1;
+            _contacts.Add(contact);
+        }
     }
 }
