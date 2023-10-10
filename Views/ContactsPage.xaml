@@ -21,7 +21,18 @@
         >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}" Detail="{Binding Email}"/>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Email}">
+                        <TextCell.ContextActions>
+                            <MenuItem 
+                                Text="delete" 
+                                IsDestructive="True" 
+                                Clicked="MenuItem_Clicked"
+                                CommandParameter="{Binding .}"
+                                >
+                                
+                            </MenuItem>
+                        </TextCell.ContextActions>
+                    </TextCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
 

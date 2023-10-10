@@ -40,4 +40,11 @@ public partial class ContactsPage : ContentPage
     {
 		Shell.Current.GoToAsync(nameof(AddContactPage));
     }
+
+    private void MenuItem_Clicked(object sender, EventArgs e)
+    {
+        var menuItem = sender as MenuItem;
+        var contact = menuItem.CommandParameter as Contact;
+        ContactRepository.DeleteContact(contact.ContactId);
+    }
 }
