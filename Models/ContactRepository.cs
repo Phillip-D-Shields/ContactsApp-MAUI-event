@@ -72,5 +72,45 @@ namespace ContactsApp.Models
                 _contacts.Remove(contactToDelete);
             }
         }
+
+
+        public static List<Contact> SearchContacts(string searchText)
+        {
+            
+
+            var filteredContacts = _contacts.Where(c => !string.IsNullOrWhiteSpace(c.Name) && c.Name.StartsWith(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+            
+            
+            
+            if (filteredContacts == null || filteredContacts.Count == 0)
+            {
+                filteredContacts = _contacts.Where(c => !string.IsNullOrWhiteSpace(c.Email) && c.Email.StartsWith(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            else
+            {
+                return filteredContacts;
+            }
+
+
+            if (filteredContacts == null || filteredContacts.Count == 0)
+            {
+                filteredContacts = _contacts.Where(c => !string.IsNullOrWhiteSpace(c.Phone) && c.Phone.StartsWith(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            else
+            {
+                return filteredContacts;
+            }
+
+            if (filteredContacts == null || filteredContacts.Count == 0)
+            {
+                filteredContacts = _contacts.Where(c => !string.IsNullOrWhiteSpace(c.Address) && c.Address.StartsWith(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            else
+            {
+                return filteredContacts;
+            }
+
+            return filteredContacts;
+        }
     }
 }
